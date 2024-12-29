@@ -122,36 +122,37 @@ func UpdateOrder() gin.HandlerFunc {
 				c.JSON(http.StatusInternalServerError, gin.H{"Error": msg})
 				return
 			}
-			updateObj = append(updateObj, bson.E{Key: "table", Value: order.Table_id})
-
-			order.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-			updateObj = append(updateObj, bson.E{Key: "updated_at", Value: order.Updated_at})
-
-			upsert := true
-
-			filter := bson.M{"order_id": orderId}
-			opt := options.UpdateOptions{
-				Upsert: &upsert,
-			}
-
-			result, err := orderCollection.UpdateOne(
-				ctx,
-				filter,
-				bson.D{
-					{Key: "$set", Value: updateObj},
-				},
-				&opt,
-			)
-
-			if err != nil {
-				msg := fmt.Sprintf("Order item update failed")
-				c.JSON(http.StatusInternalServerError, gin.H{"Error": msg})
-				return
-			}
-			defer cancel()
-			c.JSON(http.StatusOK, result)
-
 		}
+
+		updateObj = append(updateObj, bson.E{Key: "table", Value: order.Table_id})
+
+		order.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+		updateObj = append(updateObj, bson.E{Key: "updated_at", Value: order.Updated_at})
+
+		upsert := true
+
+		filter := bson.M{"order_id": orderId}
+		opt := options.UpdateOptions{
+			Upsert: &upsert,
+		}
+
+		result, err := orderCollection.UpdateOne(
+			ctx,
+			filter,
+			bson.D{
+				{Key: "$set", Value: updateObj},
+			},
+			&opt,
+		)
+
+		if err != nil {
+			msg := fmt.Sprintf("Order item update failed")
+			c.JSON(http.StatusInternalServerError, gin.H{"Error": msg})
+			return
+		}
+		defer cancel()
+		c.JSON(http.StatusOK, result)
+
 	}
 }
 
