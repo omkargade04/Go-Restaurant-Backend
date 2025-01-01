@@ -191,11 +191,9 @@ func ItemsByOrder(id string) (OrderItems []primitive.M, err error) {
 
 	if err != nil{
 		panic(err)
-		return
 	}
 	if err = result.All(ctx, &OrderItems); err != nil{
 		panic(err)
-		return
 	}
 
 	defer cancel()

@@ -5,8 +5,8 @@ import (
 	"os"
 	"github.com/gin-gonic/gin"
 	"go-restro-backend/database"
-	"go-restro-backend/routes"
-	"go-restro-backend/middleware"
+	routes "go-restro-backend/routes"
+	middleware "go-restro-backend/middleware"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
