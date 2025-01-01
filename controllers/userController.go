@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"go-restro-backend/database"
-	"go-restro-backend/helpers"
+	helper "go-restro-backend/helpers"
 	"go-restro-backend/models"
 	"log"
 	"net/http"
@@ -141,7 +141,7 @@ func SignUp() gin.HandlerFunc {
 		user.User_id = user.ID.Hex()
 
 		//Generate token and refresh token
-		token, refreshToken, _ := helpers.GenerateAllTokens(*user.Email, *user.First_name, *user.Last_name, user.User_id)
+		token, refreshToken, _ := helper.GenerateAllTokens(*user.Email, *user.First_name, *user.Last_name, user.User_id)
 		user.Token = &token
 		user.Refresh_token = &refreshToken
 
@@ -182,7 +182,7 @@ func Login() gin.HandlerFunc {
 		//Verify the password
 		passwordIsValid, msg := VerifyPassword(*user.Password, *foundUser.Password)
 		defer cancel()
-		if passwordIsValid != true{
+		if passwordIsValid != true {
 			c.JSON(http.StatusInternalServerError, gin.H{"Error": msg})
 			return
 		}
@@ -200,7 +200,7 @@ func Login() gin.HandlerFunc {
 
 func HashPassword(password string) string {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	if err != nil{
+	if err != nil {
 		log.Panic(err)
 	}
 	return string(bytes)
@@ -211,8 +211,8 @@ func VerifyPassword(userPassword string, providedPassword string) (bool, string)
 	check := true
 	msg := ""
 
-	if err != nil{
-		msg := fmt.Sprintf("Login or password is incorrect")
+	if err != nil {
+		msg = fmt.Sprintf("Login or password is incorrect")
 		check = false
 	}
 	return check, msg
