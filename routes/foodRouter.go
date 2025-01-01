@@ -1,8 +1,9 @@
 package routes
 
-import(
-	"github.com/gin-gonic/gin"
+import (
 	controller "go-restro-backend/controllers"
+
+	"github.com/gin-gonic/gin"
 )
 
 func FoodRoutes(incomingRoutes *gin.Engine) {

@@ -2,7 +2,7 @@ package helpers
 
 import()
 
-func GenerateAllTokens(id string)(token string) {
+func GenerateAllTokens(email string, first_name string, last_name, string, id string)(token string) {
 
 }
 
