@@ -33,6 +33,7 @@ Before running this project, make sure you have the following installed:
 go-restro-backend/
 ├── controllers/
 ├── database/
+├── helpers/
 ├── middleware/
 ├── models/
 ├── routes/
@@ -115,7 +116,7 @@ go mod download
 4. Set up environment variables
 ```bash
 export PORT=8080
-# Add other necessary environment variables
+export SECRET_KEY=your-secret-key
 ```
 
 5. Run the application
